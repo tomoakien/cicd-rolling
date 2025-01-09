@@ -11,6 +11,9 @@ resource "aws_codebuild_project" "codebuild" {
     type            = "GITHUB"
     location        = var.github_repository
     git_clone_depth = 0
+    buildspec = templatefile("${path.module}/buildspec.tpl", {
+      AWS_DEFAULT_REGION = "ap-northeast-1"
+    })
   }
   artifacts {
     type = "NO_ARTIFACTS"
