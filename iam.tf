@@ -135,7 +135,13 @@ resource "aws_iam_policy" "codepipeline" {
           "s3:GetObject",
           "s3:GetObjectVersion",
           "s3:GetBucketVersioning",
-          "codestar-connections:UseConnection"
+          "codestar-connections:UseConnection",
+          "ecs:UpdateService",
+          "ecs:DescribeServices",
+          "ecs:RegisterTaskDefinition",
+          "ecs:RunTask",
+          "ecs:DescribeTasks",
+          "ecs:ListTasks"
         ]
         Resource = "*"
       }
