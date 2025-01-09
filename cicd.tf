@@ -25,7 +25,7 @@ resource "aws_codebuild_project" "codebuild" {
     #dockerをビルドする為必須
 
     environment_variable {
-      name ="AWS_DEFAULT_REGION"
+      name  = "AWS_DEFAULT_REGION"
       value = "ap-northeast-1"
     }
   }
