@@ -9,7 +9,7 @@ resource "aws_codebuild_project" "codebuild" {
   #ここのブロックでどこのソースを使用するか決める
   source {
     type            = "GITHUB"
-    location        = "https://github.com/tomoakien/ctn-cicd.git"
+    location        = var.github_repository
     git_clone_depth = 0
   }
   artifacts {
@@ -53,7 +53,7 @@ resource "aws_codepipeline" "pipeline" {
 
       configuration = {
         ConnectionArn        = aws_codestarconnections_connection.github.arn
-        FullRepositoryId     = "tomoakien/ctn-cicd"
+        FullRepositoryId     = var.github_full_repository_name
         Branch               = "main"
         OutputArtifactFormat = "CODEBUILD_CLONE_REF"
       }
