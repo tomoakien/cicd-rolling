@@ -54,7 +54,7 @@ resource "aws_codepipeline" "pipeline" {
       configuration = {
         ConnectionArn        = aws_codestarconnections_connection.github.arn
         FullRepositoryId     = var.github_full_repository_name
-        Branch               = "main"
+        BranchName           = "main"
         OutputArtifactFormat = "CODEBUILD_CLONE_REF"
       }
     }
@@ -90,7 +90,7 @@ resource "aws_codepipeline" "pipeline" {
       input_artifacts = ["build_output"]
 
       configuration = {
-        clusterName = aws_ecs_cluster.cluster.name
+        ClusterName = aws_ecs_cluster.cluster.name
         ServiceName = aws_ecs_service.service.name
         FileName    = "imagedefinitions.json"
       }

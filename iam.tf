@@ -54,10 +54,47 @@ resource "aws_iam_role" "codebuild_role" {
   })
 }
 
-resource "aws_iam_policy_attachment" "codebuild_policy" {
-  name       = "codebuild_policy-attachment"
-  roles      = [aws_iam_role.codebuild_role.name]
-  policy_arn = "arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess"
+resource "aws_iam_policy" "codebuild_policy" {
+  name = "codebuild_policy"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "codebuild:StartBuild",
+          "codebuild:StopBuild",
+          "codebuild:StartBuildBatch",
+          "codebuild:StopBuildBatch",
+          "codebuild:RetryBuild",
+          "codebuild:RetryBuildBatch",
+          "codebuild:BatchGet*",
+          "codebuild:GetResourcePolicy",
+          "codebuild:DescribeTestCases",
+          "codebuild:DescribeCodeCoverages",
+          "codebuild:List*",
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "cloudwatch:GetMetricStatistics",
+          "ecr:GetAuthorizationToken",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage",
+          "s3:GetObject",
+          "s3:Putobject",
+          "s3:Listbucket",
+          "codestar-connections:UseConnection"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild_at" {
+  role       = aws_iam_role.codebuild_role.name
+  policy_arn = aws_iam_policy.codebuild_policy.arn
 }
 
 # ----------------------------------------------------------------
@@ -87,6 +124,8 @@ resource "aws_iam_policy" "codepipeline" {
       {
         Effect = "Allow"
         Action = [
+          "codebuild:StartBuild",
+          "codebuild:BatchGetBuilds",
           "s3:PutObject",
           "s3:GetObject",
           "s3:GetObjectVersion",
