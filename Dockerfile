@@ -1,4 +1,5 @@
-FROM ubuntu:18.04
+FROM public.ecr.aws/ubuntu/ubuntu:18.04
+
 
 # Install dependencies
 RUN apt-get update && \
