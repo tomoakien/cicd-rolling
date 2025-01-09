@@ -7,6 +7,7 @@ resource "aws_codebuild_project" "codebuild" {
   description  = "Codebuild project"
   service_role = aws_iam_role.codebuild_role.arn
   #ここのブロックでどこのソースを使用するか決める
+  #環境変数を使えるように変更
   source {
     type            = "GITHUB"
     location        = var.github_repository
