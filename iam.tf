@@ -141,7 +141,8 @@ resource "aws_iam_policy" "codepipeline" {
           "ecs:RegisterTaskDefinition",
           "ecs:RunTask",
           "ecs:DescribeTasks",
-          "ecs:ListTasks"
+          "ecs:ListTasks",
+          "iam:PassRole"
         ]
         Resource = "*"
       }
