@@ -12,9 +12,6 @@ resource "aws_codebuild_project" "codebuild" {
     type            = "GITHUB"
     location        = var.github_repository
     git_clone_depth = 0
-    buildspec = templatefile("${path.module}/buildspec.tpl", {
-      AWS_DEFAULT_REGION = "ap-northeast-1"
-    })
   }
   artifacts {
     type = "NO_ARTIFACTS"
@@ -26,6 +23,11 @@ resource "aws_codebuild_project" "codebuild" {
     type            = "LINUX_CONTAINER"
     privileged_mode = true
     #dockerをビルドする為必須
+
+    environment_variable {
+      name ="AWS_DEFAULT_REGION"
+      value = "ap-northeast-1"
+    }
   }
   build_timeout = 60
 }
