@@ -1,0 +1,13 @@
+[
+  {
+    "name": "ctn-cicd-hdon-cont",
+    "image": "726997775347.dkr.ecr.ap-northeast-1.amazonaws.com/ctn-cicd-hdon-repo:latest",
+    "essential": true,
+    "portMappings": [
+      {
+        "protocol": "tcp",
+        "containerPort": 80
+      }
+    ]
+  }
+]
