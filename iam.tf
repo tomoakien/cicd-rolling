@@ -114,17 +114,10 @@ resource "aws_iam_role" "aws_codepipeline_role" {
       {
         Effect = "Allow"
         Principal = {
-          Service = "codepipeline.amazonaws.com"
+          Service = ["codepipeline.amazonaws.com", "ecs-tasks.amazonaws.com"]
         }
         Action = "sts:AssumeRole"
-      },
-            {
-        Effect = "Allow"
-        Principal = {
-          Service = "ecs-tasks.amazonaws.com"
-        }
-        Action = "sts:AssumeRole"
-      },
+      }
     ]
   })
 }
@@ -144,16 +137,9 @@ resource "aws_iam_policy" "codepipeline" {
           "s3:GetObjectVersion",
           "s3:GetBucketVersioning",
           "codestar-connections:UseConnection",
-          "ecs:CreateService",
+          "ecs:*",
           "ecr:BatchCheckLayerAvailability",
-          "ecr:GetAuthorizationToken",
-          "ecs:DescribeTaskDefinition",
-          "ecs:UpdateService",
-          "ecs:DescribeServices",
-          "ecs:RegisterTaskDefinition",
-          "ecs:RunTask",
-          "ecs:DescribeTasks",
-          "ecs:ListTasks"
+          "ecr:GetAuthorizationToken"
         ]
         Resource = "*"
       },
@@ -162,7 +148,7 @@ resource "aws_iam_policy" "codepipeline" {
         "Action" : [
           "iam:PassRole"
         ],
-        "Resource" : "arn:aws:iam::726997775347:role/ecsTaskExecutionRole"
+        "Resource" : "*"
       }
     ]
   })
